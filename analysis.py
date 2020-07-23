@@ -48,6 +48,16 @@ def anova(title,data):
 
     # ANOVA to be used exclusively with average hit and pc90 data
 
+    asia = ['Japan','South Korea','Mongolia','China','Hong Kong','Pakistan','India','Sri Lanka','Philippines','Singapore','Malaysia','Thailand','Vietnam','Taiwan','Indonesia','Israel','Oman','Lebanon','UAE','Saudi Arabia','Iran','Jordan']
+    africa = ['Kenya','Uganda','Zambia','Zimbabwe','Senegal','Ivory Coast','Burkina Faso','Cape Verde','Guinea Bissau','Sao Tome and Principe','Rwanda','Central African Republic','Cameroon','Morocco','Sudan','Mali','Tunisia','South Africa']
+    europe = ['Croatia','England','France','Italy','Spain','Russia','Turkey','Austria','Bulgaria','Czech Republic','Poland','Romania','Scotland','United Kingdom']
+    na = ['Cuba','Guatemala','US','Mexico']
+    sa = ['Argentina','Brazil','Chile','Ecuador','Peru','Venezuela']
+    oceania = ['Papua New Guinea','Australia']
+
+    regions = ['Central Africa','Central America','East Africa','East Asia','Europe','North Africa','North America','Northeast Asia','Oceania','South Africa','South America','South Asia','Southeast Asia','Southwest Asia','West Africa','West Indes']
+
+
     all_pcs = []
     gag = []
     pol = []
@@ -61,8 +71,23 @@ def anova(title,data):
 
     f,pvalue = stats.f_oneway(all_pcs,gag,pol)
 
+    if 'asia' in title:
+        output = pd.DataFrame(data=data,index=asia,columns=['All PCS','Gag PCS','Pol PCS'])
+    elif 'africa' in title:
+        output = pd.DataFrame(data=data,index=africa,columns=['All PCS','Gag PCS','Pol PCS'])
+    elif 'europe' in title:
+        output = pd.DataFrame(data=data,index=europe,columns=['All PCS','Gag PCS','Pol PCS'])
+    elif 'NA' in title:
+        output = pd.DataFrame(data=data,index=na,columns=['All PCS','Gag PCS','Pol PCS'])
+    elif 'oceania' in title:
+        output = pd.DataFrame(data=data,index=oceania,columns=['All PCS','Gag PCS','Pol PCS'])
+    elif 'SA' in title:
+        output = pd.DataFrame(data=data,index=sa,columns=['All PCS','Gag PCS','Pol PCS'])
+    else:
+        output = pd.DataFrame(data=data,index=regions,columns=['All PCS','Gag PCS','Pol PCS'])
 
-    print(pvalue)
+    output.loc['P value'] = [pvalue,'-','-']
+    print(output)
     print('\n')
 
 def crawl(root,folders):
